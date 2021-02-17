@@ -1,28 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="APP">
+    <A />
+    <h1>------------------</h1>
+    <B />
   </div>
 </template>
-
+ 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import A from './components/Addition'
+import B from './components/Subtraction'
 export default {
-  name: 'App',
+  name: 'APP',
+  data() {
+    return {}
+  },
   components: {
-    HelloWorld
-  }
+    A,
+    B,
+  },
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+ 
+<style scoped lang = "scss">
 </style>
