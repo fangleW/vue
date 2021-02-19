@@ -1,19 +1,15 @@
 <template>
-  <div id="app">
-    <!-- 路由占位符 -->
-    <router-view></router-view>
-  </div>
+  <div class="home">home组件</div>
 </template>
  
 <script>
 export default {
-  name: "App",
+  name: "home",
   data() {
     return {
       msg: "Welcome to your vueName",
     };
   },
-  methods: {},
 };
 </script>
  
