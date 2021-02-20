@@ -15,13 +15,13 @@
         <!-- 用户名 -->
         <a-form-model-item prop="username">
           <a-input v-model="loginForm.username">
-            <a-icon slot="prefix" type="user" />
+            <i slot="prefix" class="iconfont icon-user" />
           </a-input>
         </a-form-model-item>
         <!-- 密码 -->
         <a-form-model-item prop="password">
           <a-input v-model="loginForm.password" type="password">
-            <a-icon slot="prefix" type="lock" />
+            <i slot="prefix" class="iconfont icon-3702mima" />
           </a-input>
         </a-form-model-item>
         <!-- 按钮区域 -->
