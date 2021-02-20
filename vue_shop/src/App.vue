@@ -7,14 +7,14 @@
  
 <script>
 export default {
-  name: "App",
+  name: 'App',
   data() {
     return {
-      msg: "Welcome to your vueName",
-    };
+      msg: 'Welcome to your vueName',
+    }
   },
   methods: {},
-};
+}
 </script>
  
 <style scoped lang = "scss">

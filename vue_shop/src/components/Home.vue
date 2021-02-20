@@ -1,16 +1,22 @@
 <template>
-  <div class="home">home组件</div>
+  <div class="home">
+    <a-button type="info" @click="logout">退出</a-button>
+  </div>
 </template>
  
 <script>
 export default {
-  name: "home",
+  name: 'home',
   data() {
-    return {
-      msg: "Welcome to your vueName",
-    };
+    return {}
   },
-};
+  methods: {
+    logout() {
+      window.sessionStorage.clear()
+      this.$router.push('/login')
+    },
+  },
+}
 </script>
  
 <style scoped lang = "scss">

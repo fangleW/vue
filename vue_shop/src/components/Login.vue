@@ -36,56 +36,55 @@
  
 <script>
 export default {
-  name: "login",
+  name: 'login',
   data() {
     return {
       //这是登陆表单的数据绑定对象
       loginForm: {
-        username: "admin",
-        password: "123456",
+        username: 'admin',
+        password: '123456',
       },
       loginFormRules: {
         //验证用户名
         username: [
-          { required: true, message: "请输入登陆名称", trigger: "blur" },
+          { required: true, message: '请输入登陆名称', trigger: 'blur' },
           {
             min: 3,
             max: 10,
-            message: "长度在 3 到 10 个字符",
-            trigger: "blur",
+            message: '长度在 3 到 10 个字符',
+            trigger: 'blur',
           },
         ],
         //验证密码
         password: [
-          { required: true, message: "请输入登陆密码", trigger: "blur" },
+          { required: true, message: '请输入登陆密码', trigger: 'blur' },
           {
             min: 6,
             max: 15,
-            message: "长度在 6 到 15 个字符",
-            trigger: "blur",
+            message: '长度在 6 到 15 个字符',
+            trigger: 'blur',
           },
         ],
       },
-    };
+    }
   },
   methods: {
     resetLoginForm() {
-      this.$refs.loginFormRef.resetFields();
+      this.$refs.loginFormRef.resetFields()
     },
     login() {
       this.$refs.loginFormRef.validate(async (valid) => {
-        if (!valid) return;
-        const { data: res } = await this.$http.post("login", this.loginForm);
-        console.log(res);
-        if (res.meta.status !== 200)
-          return this.$message.error("登陆失败", 1.5);
-        this.$message.success("登陆成功", 1.5);
-        window.sessionStorage.setItem("token", res.data.token);
-        this.$router.push("/home");
-      });
+        if (!valid) return
+        const { data: res } = await this.$http.post('login', this.loginForm)
+        console.log(res)
+        if (res.meta.status !== 200) return this.$message.error('登陆失败', 1.5)
+        this.$message.success('登陆成功', 1.5)
+        window.sessionStorage.setItem('token', res.data.token)
+        this.$router.push('/home')
+      })
     },
   },
-};
+}
 </script>
  
 <style scoped lang = "scss">
