@@ -12,24 +12,29 @@
       <!-- 主体区域 -->
       <a-layout>
         <!-- 左侧侧边栏 -->
-        <a-layout-sider style="width: 200px">
-          <div class="toogle-button" @click="toogleCoollapse">
+        <a-layout-sider v-model="collapsed" :collapsible="true">
+          <!-- <div class="toogle-button" @click="toogleCoollapse">
             <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'"></a-icon>
-          </div>
+          </div> -->
           <a-menu
             mode="inline"
-            :inlineCollapsed="collapsed"
             :open-keys="openKeys"
             :theme="theme"
             @openChange="onOpenChange"
+            :inline-collapsed="collapsed"
           >
-            <!-- @click="handleClick" -->
             <a-sub-menu v-for="item in menuList" :key="item.id">
+              <!-- @click="handleClick(item.path)" -->
               <span slot="title">
+                <!-- <a-icon type="menu" /> -->
                 <i :class="iconsObj[item.id]" />
-                <span>{{ item.authName }}</span>
+                <span v-show="!collapsed">{{ item.authName }}</span>
               </span>
-              <a-menu-item v-for="ele in item.children" :key="ele.id">
+              <a-menu-item
+                v-for="ele in item.children"
+                :key="ele.id"
+                @click="handleClick(ele.path)"
+              >
                 <a-icon type="menu" />
                 <span>{{ ele.authName }}</span>
               </a-menu-item>
@@ -37,7 +42,9 @@
           </a-menu>
         </a-layout-sider>
         <!-- 主体 -->
-        <a-layout-content>Content</a-layout-content>
+        <a-layout-content class="content"
+          ><router-view></router-view
+        ></a-layout-content>
       </a-layout>
     </a-layout>
   </div>
@@ -65,22 +72,26 @@ export default {
   },
   created() {
     this.getMenuList()
+    // this.selectedKeys
   },
   methods: {
     logout() {
       window.sessionStorage.clear()
       this.$router.push('/login')
     },
-    handleClick() {},
+    handleClick(data) {
+      window.sessionStorage.setItem('activePath', data)
+      this.$router.push('/' + data)
+    },
     // 获取所有菜单
     async getMenuList() {
       const { data: res } = await this.$http.get('menus')
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
       this.menuList = res.data
-      console.log(res)
+      // console.log(res)
     },
     onOpenChange(openKeys) {
-      console.log(openKeys)
+      // console.log(openKeys)
       const latestOpenKey = openKeys.find(
         (key) => this.openKeys.indexOf(key) === -1
       )
@@ -92,7 +103,6 @@ export default {
     },
     //菜单的折叠与展开
     toogleCoollapse() {
-      console.log(11)
       this.collapsed = !this.collapsed
     },
   },
@@ -134,5 +144,10 @@ export default {
 }
 .iconfont {
   margin-right: 10px;
+}
+.content {
+  margin-left: 15px;
+  margin-top: 15px;
+  margin-right: 15px;
 }
 </style>
