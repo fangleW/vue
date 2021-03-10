@@ -5,3 +5,18 @@ body,
   margin: 0;
   padding: 0;
 }
+
+.ant-breadcrumb {
+  margin-bottom: 15px;
+  font-size: 12px;
+}
+
+.ant-card {
+  box-shadow: 0 1px 1px rgba(197, 127, 127, 0.15) !important;
+}
+
+.ant-table {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 12px;
+}
