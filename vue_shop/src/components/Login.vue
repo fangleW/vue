@@ -27,7 +27,12 @@
         <!-- 按钮区域 -->
         <a-form-model-item class="btns">
           <a-button type="primary" @click="login">登陆</a-button>
-          <a-button type="default" @click="resetLoginForm">重置</a-button>
+          <a-button
+            type="default"
+            @click="resetLoginForm"
+            style="margin-left: 15px"
+            >重置</a-button
+          >
         </a-form-model-item>
       </a-form-model>
     </div>
