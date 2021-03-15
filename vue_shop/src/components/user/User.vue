@@ -59,7 +59,7 @@
             <template slot="title">
               <span>分配角色</span>
             </template>
-            <a-button icon="setting"></a-button>
+            <a-button icon="setting" @click="setRole(record)"></a-button>
           </a-tooltip>
         </span>
       </a-table>
@@ -132,6 +132,32 @@
           <a-input v-model="editForm.mobile" />
         </a-form-model-item>
       </a-form-model>
+    </a-modal>
+
+    <a-modal
+      v-model="setRoleVisible"
+      title="分配权限"
+      @ok="setRoleOk"
+      @cancel="setRoleCancel"
+    >
+      <p>当前的用户:{{ userInfo.username }}</p>
+      <p>当前的角色:{{ userInfo.role_name }}</p>
+      <p>
+        分配新角色:
+        <a-select
+          placeholder="请选择"
+          style="width: 120px"
+          v-model="selectRoleId"
+          @change="handleChange"
+        >
+          <a-select-option
+            v-for="item in roleList"
+            :key="item.id"
+            :value="item.id"
+            >{{ item.roleName }}</a-select-option
+          >
+        </a-select>
+      </p>
     </a-modal>
   </div>
 </template>
@@ -257,6 +283,14 @@ export default {
           { validator: checkMobile, trigger: 'blur' },
         ],
       },
+      //分配角色
+      setRoleVisible: false,
+      //需要被分配角色的用户信息
+      userInfo: {},
+      //角色数据列表
+      roleList: [],
+      //选择的角色
+      selectRoleId: '',
     }
   },
   created() {
@@ -364,6 +398,45 @@ export default {
           _this.$message.info('已经取消了删除')
         },
       })
+    },
+    //展示分配角色
+    async setRole(data) {
+      console.log('data', data)
+      //获取所有角色列表
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取角色列表失败')
+      }
+      this.roleList = res.data
+      this.setRoleVisible = true
+      this.userInfo = data
+    },
+    async setRoleOk() {
+      if (!this.selectRoleId) {
+        return this.$message.error('请选择要分配的角色')
+      }
+      const { data: res } = await this.$http.put(
+        `users/${this.userInfo.id}/role`,
+        {
+          rid: this.selectRoleId,
+        }
+      )
+      if (res.meta.status !== 200) {
+        return this.$message.error('更新角色失败！')
+      }
+      this.$message.success('更新角色成功')
+      this.getUserList()
+      this.setRoleVisible = false
+    },
+    //关对话框
+    setRoleCancel() {
+      this.selectRoleId = ''
+      this.userInfo = {}
+      this.setRoleVisible = false
+    },
+    //分配新角色
+    handleChange(value) {
+      // this.selectRoleId = value
     },
   },
 }
