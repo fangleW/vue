@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css';
+import TreeTable from 'vue-table-with-tree-grid'
 import '@/assets/css/global.css'
 //导入字体图标
 import '@/assets/fonts/iconfont.css'
@@ -21,6 +22,7 @@ axios.interceptors.request.use((config) => {
 Vue.config.productionTip = false
 
 Vue.use(Antd)
+Vue.component('tree-table', TreeTable)
 
 new Vue({
   router,
