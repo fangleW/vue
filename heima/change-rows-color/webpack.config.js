@@ -12,6 +12,7 @@ const htmlPlugin = new HtmlPlugin({
 })
 //3.插件的数组，将来webpack在运行时，会加载并调用这些插件
 
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 module.exports = {
   //模式 (development 和 production)
@@ -24,9 +25,9 @@ module.exports = {
     //存放目录
     path: path.join(__dirname, 'dist'),
     //生成的文件名
-    filename: 'main.js',
+    filename: 'js/main.js',
   },
-  plugins:[htmlPlugin],
+  plugins:[htmlPlugin,new CleanWebpackPlugin()],
   //
   devServer:{
     open:true, //初次打包完成后，自动打开浏览器
@@ -41,7 +42,15 @@ module.exports = {
       {test:/\.less$/,use:['style-loader','css-loader','less-loader']},
       //处理图片文件loader 
       //use 需要调用的只有一个可以是字符串，多个必须是数组
-      {test:/\.jpg|png|gif$/,use:['url-loader']},
+      // {test:/\.jpg|png|gif$/,use:['url-loader']},
+      // 限制大小 limit
+      //url多个参数之间使用& 分隔
+      //outputPath=images 指定目录
+      {test:/\.jpg|png|gif$/,use:['url-loader?limit=160000&outputPath=images']},
+      //使用babel-loader处理高级的js语法
+      //只需要把自己的代码进行转换，不需要考虑node_modules
+      //在babel.config.js中定义Babel配置项
+      {test:/\js$/,use:'babel-loader',exclude:/node-modules/}
     ]
   }
 }
