@@ -52,6 +52,12 @@ module.exports = {
       //在babel.config.js中定义Babel配置项
       {test:/\js$/,use:'babel-loader',exclude:/node-modules/}
     ]
+  },
+  resolve:{
+    alias:{
+      //告诉webpack @ 符号表示src这一层级
+      '@':path.join(__dirname,'./src/')
+    }
   }
 }
 
